@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AStar\Grid.cs" />
+     <Compile Include="Assets\Scripts\AStar\Node.cs" />
      <Compile Include="Assets\Scripts\FSM\Agent.cs" />
      <Compile Include="Assets\Scripts\FSM\AgentManager.cs" />
      <Compile Include="Assets\Scripts\FSM\Agents\Miner.cs" />
