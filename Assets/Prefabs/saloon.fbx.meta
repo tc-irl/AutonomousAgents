@@ -1,0 +1,141 @@
+fileFormatVersion: 2
+guid: 42890ff9a73143a4f9d02f2c9fb02c45
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: aleron_default
+    100002: Camera
+    100004: colums_default
+    100006: floor_default
+    100008: foundation_default
+    100010: frames_default
+    100012: glass_default
+    100014: Lamp
+    100016: midtrims_default
+    100018: porchfloor_default
+    100020: porchrails_default
+    100022: reardoor_default
+    100024: rooftrim_default
+    100026: //RootNode
+    100028: saloon_default
+    100030: sign_default
+    100032: swingdoorframe_default
+    100034: swingdoorinside_default
+    400000: aleron_default
+    400002: Camera
+    400004: colums_default
+    400006: floor_default
+    400008: foundation_default
+    400010: frames_default
+    400012: glass_default
+    400014: Lamp
+    400016: midtrims_default
+    400018: porchfloor_default
+    400020: porchrails_default
+    400022: reardoor_default
+    400024: rooftrim_default
+    400026: //RootNode
+    400028: saloon_default
+    400030: sign_default
+    400032: swingdoorframe_default
+    400034: swingdoorinside_default
+    2300000: aleron_default
+    2300002: colums_default
+    2300004: floor_default
+    2300006: foundation_default
+    2300008: frames_default
+    2300010: glass_default
+    2300012: midtrims_default
+    2300014: porchfloor_default
+    2300016: porchrails_default
+    2300018: reardoor_default
+    2300020: rooftrim_default
+    2300022: saloon_default
+    2300024: sign_default
+    2300026: swingdoorframe_default
+    2300028: swingdoorinside_default
+    3300000: aleron_default
+    3300002: colums_default
+    3300004: floor_default
+    3300006: foundation_default
+    3300008: frames_default
+    3300010: glass_default
+    3300012: midtrims_default
+    3300014: porchfloor_default
+    3300016: porchrails_default
+    3300018: reardoor_default
+    3300020: rooftrim_default
+    3300022: saloon_default
+    3300024: sign_default
+    3300026: swingdoorframe_default
+    3300028: swingdoorinside_default
+    4300000: floor_default
+    4300002: glass_default
+    4300004: rooftrim_default
+    4300006: reardoor_default
+    4300008: midtrims_default
+    4300010: colums_default
+    4300012: frames_default
+    4300014: porchfloor_default
+    4300016: sign_default
+    4300018: swingdoorframe_default
+    4300020: porchrails_default
+    4300022: saloon_default
+    4300024: foundation_default
+    4300026: aleron_default
+    4300028: swingdoorinside_default
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
