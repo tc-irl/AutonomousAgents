@@ -3,12 +3,62 @@ using System.Collections;
 
 namespace FSM
 {
+
+    public class WalkingTo : State<Miner>
+    {
+
+        public override void Enter(Miner miner)
+        {
+            var locManager = Object.FindObjectOfType<LocationManager>();
+
+            //miner.Say(string.Format("Walkin' to {0}", e.Agent.TargetLocation));
+            miner.ChangeLocation(locManager.Locations[miner.TargetLocation].position);
+
+        }
+
+        public override void Execute(Miner miner)
+        {
+            var locManager = Object.FindObjectOfType<LocationManager>();
+
+            var target = locManager.Locations[miner.TargetLocation].position;
+
+
+            target.y = 0;
+
+            if (Vector3.Distance(target, miner.transform.position) <= 3.0f)
+            {
+                miner.Location = miner.TargetLocation;
+                miner.StateMachine.RevertToPreviousState();
+            }
+
+
+
+        }
+        public override void Exit(Miner agent)
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        public override bool OnMessage(Miner agent, Telegram telegram)
+        {
+            // throw new System.NotImplementedException();
+            return true;
+        }
+
+    }
+
     public class EnterMineAndDigForNugget : State<Miner>
     {
         public override void Enter(Miner miner)
         {
             Debug.Log(miner.ID + " Walkin' to the goldmine");
-            miner.MinerLocation = Location.goldMine;
+            //var goldMinePosition = GameObject.FindGameObjectWithTag("Mine");
+            miner.TargetLocation = Location.goldMine;
+
+            if (miner.Location != miner.TargetLocation)
+            {
+                miner.StateMachine.ChangeState(new WalkingTo());
+            }
 
         }
 
@@ -31,7 +81,8 @@ namespace FSM
 
         public override void Exit(Miner miner)
         {
-            Debug.Log(miner.ID + "Ah'm leaving the gold mine with mah pockets full o' sweet gold");
+            if (miner.Location == miner.TargetLocation)
+                Debug.Log(miner.ID + "Ah'm leaving the gold mine with mah pockets full o' sweet gold");
         }
 
         public override bool OnMessage(Miner agent, Telegram telegram)
@@ -47,7 +98,13 @@ namespace FSM
         public override void Enter(Miner miner)
         {
             Debug.Log(miner.ID + " Goin' to the bank. Yes siree");
-            miner.MinerLocation = Location.bank;
+
+            miner.TargetLocation = Location.bank;
+
+            if (miner.Location != miner.TargetLocation)
+            {
+                miner.StateMachine.ChangeState(new WalkingTo());
+            }
         }
 
         public override void Execute(Miner miner)
@@ -83,8 +140,14 @@ namespace FSM
         public override void Enter(Miner miner)
         {
             Debug.Log(miner.ID + " Walkin' Home");
-            miner.MinerLocation = Location.shack;
-            Message.DispatchMessage(0, miner.ID, miner.WifeId, MessageType.HiHoneyImHome);
+            miner.TargetLocation = Location.shack;
+
+            if (miner.Location != miner.TargetLocation)
+            {
+                miner.StateMachine.ChangeState(new WalkingTo());
+            }
+            else
+                Message.DispatchMessage(0, miner.ID, miner.WifeId, MessageType.HiHoneyImHome);
         }
 
         public override void Execute(Miner miner)
@@ -128,10 +191,11 @@ namespace FSM
     {
         public override void Enter(Miner miner)
         {
-            if (miner.MinerLocation != Location.saloon)
+            miner.TargetLocation = Location.saloon;
+
+            if (miner.Location != miner.TargetLocation)
             {
-                Debug.Log(miner.ID + " Boy, ah sure is thusty! Walking to the saloon");
-                miner.MinerLocation = Location.saloon;
+                miner.StateMachine.ChangeState(new WalkingTo());
             }
         }
 

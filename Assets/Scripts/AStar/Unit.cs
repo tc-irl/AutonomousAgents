@@ -1,74 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class Unit : MonoBehaviour 
+using System.Collections.Generic;
+namespace FSM
 {
-    public Transform target;
-    public float speed = 1;
-    Vector3[] path;
-    int targetIndex;
-
-    void Start()
+    public class Unit : MonoBehaviour
     {
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-    }
+        public Miner miner;
+        public Transform currentTarget;
+        public List<Transform> possibleLocations = new List<Transform>();
 
-    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
-    {
-        if (pathSuccessful)
+        //public float speed = 1;
+        //Vector3[] path;
+        //int targetIndex;
+
+        //int currentLocation;
+
+        void Start()
         {
-            path = newPath;
+            //currentLocation = (int)miner.location; // hacky way of doing it
 
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
+            //switch (currentLocation)
+            //{
+            //    case 0:
+            //        {
+            //            currentTarget = possibleLocations[0];
+            //            break;
+            //        }
+            //    case 1:
+            //        {
+            //            currentTarget = possibleLocations[1];
+            //            break;
+            //        }
+            //    case 2:
+            //        {
+            //            currentTarget = possibleLocations[2];
+            //            break;
+            //        }
+            //    case 3:
+            //        {
+            //            currentTarget = possibleLocations[3];
+            //            break;
+            //        }
+            //}
+
+           
         }
-    }
 
-    IEnumerator FollowPath()
-    {
-        Vector3 currentWayPoint = path[0];
-
-        while (true)
-        {
-            if (transform.position == currentWayPoint)
-            {
-                targetIndex++;
-
-                if (targetIndex >= path.Length)
-                {
-                    targetIndex = 0;
-                    path = new Vector3[0];
-                    yield break;
-                }
-
-                currentWayPoint = path[targetIndex];
-            }
-            
-            currentWayPoint.y = transform.position.y; // 
-
-            transform.position = Vector3.MoveTowards(transform.position, currentWayPoint, speed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    public void OnDrawGizmos()
-    {
-        if (path != null)
-        {
-            for (int i = targetIndex; i < path.Length; i++)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
-
-                if (i == targetIndex)
-                {
-                    Gizmos.DrawLine(transform.position, path[i]);
-                }
-                else
-                {
-                    Gizmos.DrawLine(path[i - 1], path[i]);
-                }
-            }
-        }
     }
 }

@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LocationManager.cs" />
      <Compile Include="Assets\Scripts\AStar\Grid.cs" />
      <Compile Include="Assets\Scripts\AStar\Heap.cs" />
      <Compile Include="Assets\Scripts\AStar\Node.cs" />

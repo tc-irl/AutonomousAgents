@@ -30,10 +30,12 @@ namespace FSM
     {
         public static List<Telegram> telegramQueue = new List<Telegram>();
 
+        
         public static void DispatchMessage(double delay, int sender, int receiver, MessageType messageType)
         {
-            Agent sendingAgent = AgentManager.GetAgent(sender);
-            Agent receivingAgent = AgentManager.GetAgent(receiver);
+            var agentManager = Object.FindObjectOfType<AgentManager>();
+            Agent sendingAgent = agentManager.GetAgent(sender);
+            Agent receivingAgent = agentManager.GetAgent(receiver);
 
             Telegram telegram = new Telegram(0, sender, receiver, messageType);
 
@@ -53,11 +55,12 @@ namespace FSM
         // This sends any messages that are due for delivery; invoked at each tick by the game's Update() method
         public static void SendDelayedMessages()
         {
+            var agentManager = Object.FindObjectOfType<AgentManager>();
             for (int i = 0; i < telegramQueue.Count; i++)
             {
                 if (telegramQueue[i].DispatchTime <= Time.time)
                 {
-                    Agent receivingAgent = AgentManager.GetAgent(telegramQueue[i].Receiver);
+                    Agent receivingAgent = agentManager.GetAgent(telegramQueue[i].Receiver);
                     SendMessage(receivingAgent, telegramQueue[i]);
                     telegramQueue.RemoveAt(i);
                 }

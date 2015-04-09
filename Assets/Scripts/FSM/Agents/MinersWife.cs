@@ -42,9 +42,18 @@ namespace FSM
         }
 
         // Update is called once per frame
-        public override void Update()
+        void Start()
         {
             stateMachine.Update();
+        }
+
+        IEnumerator PerformUpdate()
+        {
+            while (true)
+            {
+                stateMachine.Update();
+                yield return new WaitForSeconds(0.8f);
+            }
         }
 
         // This method is invoked when the agent receives a message

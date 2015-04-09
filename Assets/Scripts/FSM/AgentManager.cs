@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FSM
 {
     public class AgentManager : MonoBehaviour
     {
-        static List<Agent> listOfAgents = new List<Agent>();
 
-        public static int AddAgent(Agent agent)
+        public List<Agent> listOfAgents;
+        public int AddAgent(Agent agent)
         {
             listOfAgents.Add(agent);
             return listOfAgents.IndexOf(agent);
         }
 
-        public static Agent GetAgent(int id)
+        public Agent GetAgent(int id)
         {
-            return listOfAgents[id];
+            var selectedAgent = (from agent in listOfAgents
+                                 where agent.ID == id
+                                 select agent).FirstOrDefault();
+
+            return selectedAgent;
         }
 
-        public static void RemoveAgent(Agent agent)
+
+        public void RemoveAgent(Agent agent)
         {
             listOfAgents.Remove(agent);
         }
