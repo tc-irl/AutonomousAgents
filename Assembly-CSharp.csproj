@@ -47,7 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AStar\Grid.cs" />
+     <Compile Include="Assets\Scripts\AStar\Heap.cs" />
      <Compile Include="Assets\Scripts\AStar\Node.cs" />
+     <Compile Include="Assets\Scripts\AStar\PathRequestManager.cs" />
+     <Compile Include="Assets\Scripts\AStar\Pathfinding.cs" />
+     <Compile Include="Assets\Scripts\AStar\Unit.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\FSM\Agent.cs" />
      <Compile Include="Assets\Scripts\FSM\AgentManager.cs" />
      <Compile Include="Assets\Scripts\FSM\Agents\Miner.cs" />

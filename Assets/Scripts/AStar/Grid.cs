@@ -1,69 +1,123 @@
 ﻿/**
- * A Star based on playlist tutorial found here: https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=1
+ * A Star code based on playlist tutorial found here: https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=1
  */
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Grid : MonoBehaviour 
+public class Grid : MonoBehaviour
 {
-    public Transform player;
-    public Vector2 gridSize;
+    public bool displayGridGizmos = true;
+    public LayerMask unwalkableMask;
+    public Vector2 gridWorldSize;
     public float nodeRadius;
+    Node[,] grid;
+
+    public TerrainType[] walkableRegions;
+    LayerMask walkableMask;
+    Dictionary<int, int> walkableRegionsDictionary = new Dictionary<int, int>();
+
     float nodeDiameter;
     int gridSizeX, gridSizeY;
 
-    public LayerMask unwalkableMask;
-
-    Node[,] grid;
-
-    void Start()
+    void Awake()
     {
         nodeDiameter = nodeRadius * 2;
-        gridSizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
-        gridSizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
+        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
+        gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+        foreach (TerrainType region in walkableRegions)
+        {
+            walkableMask.value = walkableMask |= region.terrainMask.value;
+            walkableRegionsDictionary.Add((int)Mathf.Log(region.terrainMask.value, 2), region.terrainPenalty);
+        }
+
         CreateGrid();
     }
 
-    //Vector3 worldBottomLeft = transform.position - Vector3.right * gridSizeX / 2 * nodeDiameter - Vector3.forward * gridSizeY / 2 * nodeDiameter;
+    public int MaxSize 
+    { 
+        get { return gridSizeX * gridSizeY; } 
+    }
+
 
     void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];
-        Vector3 worldBottomLeft = transform.position - Vector3.right * gridSizeX/2 * nodeDiameter- Vector3.forward * gridSizeY / 2 * nodeDiameter;
+        Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
 
-        for(int x = 0; x < gridSizeX; x++)
+        for (int x = 0; x < gridSizeX; x++)
         {
-            for(int y = 0; y < gridSizeY; y++)
+            for (int y = 0; y < gridSizeY; y++)
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
+                int movementPenalty = 0;
 
-                grid[x, y] = new Node(walkable, worldPoint); 
+                // raycast
+                if (walkable)
+                {
+                    Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit, 100, walkableMask))
+                    {
+                        walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                    }
+                }
+
+                grid[x, y] = new Node(walkable, worldPoint, x, y, movementPenalty);
             }
         }
     }
 
+    public List<Node> GetNeighbours(Node node)
+    {
+        List<Node> neighbours = new List<Node>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                int checkX = node.gridX + x;
+                int checkY = node.gridY + y;
+
+                if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+
+        return neighbours;
+    }
+
+
     public Node NodeFromWorldPoint(Vector3 worldPosition)
     {
-        Vector3 localPosition = new Vector3(worldPosition.x - transform.position.x - nodeRadius, 0, worldPosition.z - transform.position.z - nodeRadius);
-        float percentX = (localPosition.x + gridSize.x / 2) / gridSize.x;
-        float percentY = (localPosition.z + gridSize.y / 2) / gridSize.y;
-        int x = Mathf.RoundToInt((gridSizeX) * percentX);
-        x = Mathf.Clamp(x, 0, gridSizeX - 1);
-        int y = Mathf.RoundToInt((gridSizeY) * percentY);
-        y = Mathf.Clamp(y, 0, gridSizeY - 1);
+        float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
+        float percentY = (worldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y;
+
+        percentX = Mathf.Clamp01(percentX);
+        percentY = Mathf.Clamp01(percentY);
+
+        int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
+        int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
+
         return grid[x, y];
     }
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, 1, gridSize.y));
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
-        if (grid != null)
+        if (grid != null && displayGridGizmos)
         {
-            Node playerNode = NodeFromWorldPoint(player.position);
-
             foreach (Node n in grid)
             {
                 if (n.walkable)
@@ -75,14 +129,15 @@ public class Grid : MonoBehaviour
                     Gizmos.color = Color.red;
                 }
 
-                if (playerNode.worldPosition == n.worldPosition)
-                {
-                    Gizmos.color = Color.cyan;
-                }
-
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
             }
-        }
+        }   
     }
 
+    [System.Serializable]
+    public class TerrainType
+    {
+        public LayerMask terrainMask;
+        public int terrainPenalty;
+    }
 }
