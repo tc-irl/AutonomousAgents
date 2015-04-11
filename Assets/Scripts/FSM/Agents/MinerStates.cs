@@ -6,7 +6,6 @@ namespace FSM
 
     public class WalkingTo : State<Miner>
     {
-
         public override void Enter(Miner miner)
         {
             var locManager = Object.FindObjectOfType<LocationManager>();
@@ -45,6 +44,11 @@ namespace FSM
             return true;
         }
 
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     public class EnterMineAndDigForNugget : State<Miner>
@@ -90,6 +94,12 @@ namespace FSM
             return false;
         }
 
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
+
     }
 
     // In this state, the miner goes to the bank and deposits gold
@@ -111,6 +121,7 @@ namespace FSM
         {
             miner.MoneyInBank += miner.GoldCarrying;
             miner.GoldCarrying = 0;
+
             Debug.Log(miner.ID + " Depositing gold. Total savings now: " + miner.MoneyInBank);
             if (miner.Rich())
             {
@@ -130,6 +141,12 @@ namespace FSM
 
         public override bool OnMessage(Miner agent, Telegram telegram)
         {
+            return false;
+        }
+
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
             return false;
         }
     }
@@ -184,6 +201,12 @@ namespace FSM
                     return false;
             }
         }
+
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     // In this state, the miner goes to the saloon to drink
@@ -217,6 +240,12 @@ namespace FSM
         {
             return false;
         }
+
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     // In this state, the miner eats the food that Elsa has prepared
@@ -242,6 +271,12 @@ namespace FSM
         {
             return false;
         }
+
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     // If the agent has a global state, then it is executed every Update() cycle
@@ -264,6 +299,12 @@ namespace FSM
 
         public override bool OnMessage(Miner agent, Telegram telegram)
         {
+            return false;
+        }
+
+        public override bool OnSense(Miner agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
             return false;
         }
     }

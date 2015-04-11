@@ -40,6 +40,11 @@ namespace FSM
             return false;
         }
 
+        public override bool OnSense(MinersWife agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     public class VisitBathroom : State<MinersWife>
@@ -62,6 +67,12 @@ namespace FSM
 
         public override bool OnMessage(MinersWife minersWife, Telegram telegram)
         {
+            return false;
+        }
+
+        public override bool OnSense(MinersWife agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
             return false;
         }
     }
@@ -108,6 +119,12 @@ namespace FSM
                     return false;
             }
         }
+
+        public override bool OnSense(MinersWife agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     public class WifesGlobalState : State<MinersWife>
@@ -145,6 +162,12 @@ namespace FSM
                 default:
                     return false;
             }                 
+        }
+
+        public override bool OnSense(MinersWife agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
         }
     }
 }

@@ -61,6 +61,12 @@ namespace FSM
         {
             return stateMachine.HandleMessage(telegram);
         }
+
+        public override bool HandleSense(Sense sense)
+        {
+            return stateMachine.HandleSense(sense);
+        }
+
     }
 
 }

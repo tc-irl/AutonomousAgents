@@ -70,6 +70,28 @@ namespace FSM
             return false;
         }
 
+        // Handle sense event
+        public bool HandleSense(Sense sense)
+        {
+            if (globalState != null)
+            {
+                if (globalState.OnSense(owner, sense))
+                {
+                    return true;
+                }
+
+            }
+            if (currentState != null)
+            {
+                if (currentState.OnSense(owner, sense))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public void ChangeState(State<T> newState)
         {
             if (newState == null)

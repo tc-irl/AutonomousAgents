@@ -11,7 +11,7 @@ namespace FSM
         abstract public void Execute(T agent);
         abstract public void Exit(T agent);
         abstract public bool OnMessage(T agent, Telegram telegram);
-       // abstract public bool OnSense(T agent, Senses sense);
+        abstract public bool OnSense(T agent, Sense sense);
     }
 
 }

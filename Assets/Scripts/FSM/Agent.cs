@@ -91,5 +91,6 @@ namespace FSM
         }
 
         abstract public bool HandleMessage(Telegram telegram);
+        abstract public bool HandleSense(Sense sense);
     }
 }

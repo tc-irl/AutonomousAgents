@@ -41,12 +41,16 @@ namespace FSM
             return true;
         }
 
+        public override bool OnSense(Sheriff agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
+
     }
  
     public class PatrolArea1 : State<Sheriff>
     {
-        private bool doOnce = true;
-
         public override void Enter(Sheriff sheriff)
         {
             Debug.Log(sheriff.ID + "Better check out area 1 for that darn outlaw");
@@ -61,18 +65,13 @@ namespace FSM
 
         public override void Execute(Sheriff sheriff)
         {
-            if (doOnce)
-            {
-                sheriff.CurrentScanTime = 0;
-                doOnce = false;
-            }
-
             sheriff.CurrentScanTime += 1;
 
             Debug.Log(sheriff.ID + " Patrolling Area 1 ");
 
             if (sheriff.ScannedEnough())
             {
+                sheriff.CurrentScanTime = 0;
                 Debug.Log(sheriff.ID + " Time to move on and patrol area 2 for that outlaw");
                 sheriff.StateMachine.ChangeState(new PatrolArea2());
             }
@@ -85,7 +84,6 @@ namespace FSM
         public override void Exit(Sheriff sheriff)
         {
             Debug.Log(sheriff.ID + " Leavin' the area");
-            doOnce = true;
         }
 
         public override bool OnMessage(Sheriff sheriff, Telegram telegram)
@@ -93,12 +91,15 @@ namespace FSM
             return false;
         }
 
+        public override bool OnSense(Sheriff agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     public class PatrolArea2 : State<Sheriff>
     {
-        private bool doOnce = true;
-
         public override void Enter(Sheriff sheriff)
         {
             Debug.Log(sheriff.ID + "Better check out area 2 for that darn outlaw");
@@ -113,18 +114,13 @@ namespace FSM
 
         public override void Execute(Sheriff sheriff)
         {
-            if (doOnce)
-            {
-                sheriff.CurrentScanTime = 0;
-                doOnce = false;
-            }
-
             sheriff.CurrentScanTime += 1;
 
             Debug.Log(sheriff.ID + " Patrolling Area 2 ");
 
             if (sheriff.ScannedEnough())
             {
+                sheriff.CurrentScanTime = 0;
                 Debug.Log(sheriff.ID + " Time to move on and patrol area 1 for that outlaw");
                 sheriff.StateMachine.ChangeState(new PatrolArea1());
             }
@@ -137,7 +133,6 @@ namespace FSM
         public override void Exit(Sheriff sheriff)
         {
             Debug.Log(sheriff.ID + " Leavin' the area");
-            doOnce = true;
         }
 
         public override bool OnMessage(Sheriff sheriff, Telegram telegram)
@@ -145,6 +140,11 @@ namespace FSM
             return false;
         }
 
+        public override bool OnSense(Sheriff agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
     }
 
     // If the agent has a global state, then it is executed every Update() cycle
@@ -169,6 +169,13 @@ namespace FSM
         {
             return false;
         }
+
+        public override bool OnSense(Sheriff agent, Sense sense)
+        {
+            // throw new System.NotImplementedException();
+            return false;
+        }
+
     }
 
 }
