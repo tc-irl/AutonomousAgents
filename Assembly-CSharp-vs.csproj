@@ -46,13 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\LocationManager.cs" />
      <Compile Include="Assets\Scripts\AStar\Grid.cs" />
      <Compile Include="Assets\Scripts\AStar\Heap.cs" />
      <Compile Include="Assets\Scripts\AStar\Node.cs" />
      <Compile Include="Assets\Scripts\AStar\PathRequestManager.cs" />
      <Compile Include="Assets\Scripts\AStar\Pathfinding.cs" />
-     <Compile Include="Assets\Scripts\AStar\Unit.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\FSM\Agent.cs" />
      <Compile Include="Assets\Scripts\FSM\AgentManager.cs" />
@@ -60,10 +58,16 @@
      <Compile Include="Assets\Scripts\FSM\Agents\MinerStates.cs" />
      <Compile Include="Assets\Scripts\FSM\Agents\MinersWife.cs" />
      <Compile Include="Assets\Scripts\FSM\Agents\MinersWifeStates.cs" />
+     <Compile Include="Assets\Scripts\FSM\Agents\Outlaw.cs" />
+     <Compile Include="Assets\Scripts\FSM\Agents\OutlawStates.cs" />
+     <Compile Include="Assets\Scripts\FSM\Agents\Sheriff.cs" />
+     <Compile Include="Assets\Scripts\FSM\Agents\SheriffStates.cs" />
      <Compile Include="Assets\Scripts\FSM\Location.cs" />
+     <Compile Include="Assets\Scripts\FSM\LocationManager.cs" />
      <Compile Include="Assets\Scripts\FSM\Messages.cs" />
      <Compile Include="Assets\Scripts\FSM\State.cs" />
      <Compile Include="Assets\Scripts\FSM\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\Sensing\SenseManager.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Glass Refraction (Pro Only)\Sources\Shaders\Glass-Stained-BumpDistort.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />

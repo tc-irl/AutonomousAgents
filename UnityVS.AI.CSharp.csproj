@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8860CCA8-E2AD-0FC5-426C-79BAD613A005}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>4.6.2f1</UnityVersion>
@@ -67,13 +65,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LocationManager.cs" />
     <Compile Include="Assets\Scripts\AStar\Grid.cs" />
     <Compile Include="Assets\Scripts\AStar\Heap.cs" />
     <Compile Include="Assets\Scripts\AStar\Node.cs" />
     <Compile Include="Assets\Scripts\AStar\PathRequestManager.cs" />
     <Compile Include="Assets\Scripts\AStar\Pathfinding.cs" />
-    <Compile Include="Assets\Scripts\AStar\Unit.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FSM\Agent.cs" />
     <Compile Include="Assets\Scripts\FSM\AgentManager.cs" />
@@ -81,10 +77,16 @@
     <Compile Include="Assets\Scripts\FSM\Agents\MinerStates.cs" />
     <Compile Include="Assets\Scripts\FSM\Agents\MinersWife.cs" />
     <Compile Include="Assets\Scripts\FSM\Agents\MinersWifeStates.cs" />
+    <Compile Include="Assets\Scripts\FSM\Agents\Outlaw.cs" />
+    <Compile Include="Assets\Scripts\FSM\Agents\OutlawStates.cs" />
+    <Compile Include="Assets\Scripts\FSM\Agents\Sheriff.cs" />
+    <Compile Include="Assets\Scripts\FSM\Agents\SheriffStates.cs" />
     <Compile Include="Assets\Scripts\FSM\Location.cs" />
+    <Compile Include="Assets\Scripts\FSM\LocationManager.cs" />
     <Compile Include="Assets\Scripts\FSM\Messages.cs" />
     <Compile Include="Assets\Scripts\FSM\State.cs" />
     <Compile Include="Assets\Scripts\FSM\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\Sensing\SenseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Raw Mocap Data\Animations\_CompleteAnimationList.txt" />

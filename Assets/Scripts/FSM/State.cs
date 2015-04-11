@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 namespace FSM
 {
@@ -9,6 +11,7 @@ namespace FSM
         abstract public void Execute(T agent);
         abstract public void Exit(T agent);
         abstract public bool OnMessage(T agent, Telegram telegram);
+       // abstract public bool OnSense(T agent, Senses sense);
     }
 
 }

@@ -8,7 +8,6 @@ namespace FSM
 
     public class LocationManager : MonoBehaviour
     {
-
         public Dictionary<Location, Transform> Locations = new Dictionary<Location, Transform>();
 
         void Awake()
@@ -23,7 +22,6 @@ namespace FSM
 
             Locations.Add(Location.shack, home.transform);
 
-
             var mine = GameObject.FindGameObjectWithTag("Mine");
             if (mine == null) throw new NullReferenceException("Mine game object is not available!");
 
@@ -33,7 +31,27 @@ namespace FSM
             if (bank == null) throw new NullReferenceException("Bank game object is not available!");
 
             Locations.Add(Location.bank, bank.transform);
+
+            var patrol1 = GameObject.FindGameObjectWithTag("Patrol1");
+            if (patrol1 == null) throw new NullReferenceException("Patrol 1 is not available!");
+
+            Locations.Add(Location.patrol1, patrol1.transform);
+
+            var patrol2 = GameObject.FindGameObjectWithTag("Patrol2");
+            if (patrol2 == null) throw new NullReferenceException("Patrol 2 is not available!");
+
+            Locations.Add(Location.patrol2, patrol2.transform);
+
+            var outlaw = GameObject.FindGameObjectWithTag("Outlaw");
+            if (outlaw == null) throw new NullReferenceException("Outlaw is not available!");
+
+            Locations.Add(Location.outlaw, outlaw.transform);
         }
 
+        void Update()
+        {
+            var outlaw = GameObject.FindGameObjectWithTag("Outlaw");
+            Locations[Location.outlaw] = outlaw.transform;
+        }
     } 
 }

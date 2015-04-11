@@ -8,7 +8,10 @@ namespace FSM
         shack,
         goldMine,
         bank,
-        saloon
+        saloon,
+        patrol1, 
+        patrol2,
+        outlaw
     }
 }
 
