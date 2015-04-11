@@ -18,7 +18,7 @@ public class Node : IHeapItem<Node>
     public int movementPenalty;
 
     int heapIndex;
-    float nodeAttenutation;
+    public int nodeAttenutation;
     
     public Node parent;
 
@@ -29,16 +29,38 @@ public class Node : IHeapItem<Node>
         this.gridX = gridX;
         this.gridY = gridY;
         movementPenalty = penalty;
-
-        if(this.walkable)
-        {
-            nodeAttenutation = 0.1f;
-        }
-        else
-        {
-            nodeAttenutation = 1.0f;
-        }
     }
+
+    // Sample way of adding attenutation factors into my world
+
+    //public Node(bool walkable, Vector3 worldPosition, int gridX, int gridY, int penalty, LayerMask nodeType)
+    //{
+    //    this.walkable = walkable;
+    //    this.worldPosition = worldPosition;
+    //    this.gridX = gridX;
+    //    this.gridY = gridY;
+    //    movementPenalty = penalty;
+
+    //    if (nodeType.ToString() == "Mountain")
+    //    {
+    //        nodeAttenutation = 5;
+    //    }
+    //    else if (nodeType.ToString() == "River")
+    //    {
+    //        nodeAttenutation = 1;
+    //    }
+
+    //    // or possibly checking if the node is walkable or not
+
+    //    if (this.walkable)
+    //    {
+    //        nodeAttenutation = 1;
+    //    }
+    //    else
+    //    {
+    //        nodeAttenutation = 3;
+    //    }
+    //}
 
     public int fCost
     {

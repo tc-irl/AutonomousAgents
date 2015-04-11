@@ -42,13 +42,21 @@ namespace FSM
             manager = GameObject.FindGameObjectWithTag("AgentManager").GetComponent<AgentManager>();
             sheriff = GameObject.FindGameObjectWithTag("Sheriff").GetComponent<Agent>();
             outlaw = GameObject.FindGameObjectWithTag("Outlaw").GetComponent<Agent>();
+            path = gameObject.GetComponent <Pathfinding>();
         }
 
         void Update()
         {
             if (Vector3.Distance(outlaw.transform.position, sheriff.transform.position) < range)
             {
-                if(CheckForRayIntersection())
+
+                //if (GameObject.FindGameObjectWithTag("A*").GetComponent<Pathfinding>().SensePath(sheriff.transform.position, outlaw.transform.position))
+                //{
+                //    Sense sense = new Sense(sheriff.ID, outlaw.ID, SenseType.Sight);
+                //    sheriff.HandleSense(sense);
+                //}
+
+                if (CheckForRayIntersection())
                 {
                     Sense sense = new Sense(sheriff.ID, outlaw.ID, SenseType.Sight);
                     sheriff.HandleSense(sense);

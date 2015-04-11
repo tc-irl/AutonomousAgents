@@ -8,6 +8,8 @@ public class Pathfinding : MonoBehaviour
 {
     public enum PathType { Shortest, Sense };
 
+    public float threshold = 6.0f;
+
     PathRequestManager requestManager;
 
     Grid grid;
@@ -84,6 +86,70 @@ public class Pathfinding : MonoBehaviour
         }
 
         requestManager.FinishedProcessingPath(waypoints, pathSuccess);
+    }
+
+    public bool SensePath(Vector3 startPos, Vector3 targetPos)
+    {
+        Vector3[] waypoints = new Vector3[0];
+        bool pathSuccess = false;
+
+        Node startNode = grid.NodeFromWorldPoint(startPos);
+        Node targetNode = grid.NodeFromWorldPoint(targetPos);
+
+        if (startNode.walkable && targetNode.walkable)
+        {
+            Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
+            HashSet<Node> closedSet = new HashSet<Node>();
+            openSet.Add(startNode);
+
+            while (openSet.Count > 0)
+            {
+                Node currentNode = openSet.RemoveFirst();
+
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
+                {
+                    pathSuccess = true;
+                    break;
+                }
+                else if (currentNode.gCost > threshold)
+                {
+                    return false;
+                }
+
+                foreach (Node neighbour in grid.GetNeighbours(currentNode))
+                {
+                    if (!neighbour.walkable || closedSet.Contains(neighbour))
+                    {
+                        continue;
+                    }
+
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) + neighbour.movementPenalty;
+                    
+                    if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    {
+                        neighbour.gCost = newMovementCostToNeighbour + neighbour.nodeAttenutation;
+                        neighbour.hCost = GetDistance(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+
+                        if (!openSet.Contains(neighbour))
+                            openSet.Add(neighbour);
+                        else
+                            openSet.UpdateItem(neighbour);
+                    }
+                }
+            }
+        }
+
+        if (pathSuccess)
+        {
+            waypoints = RetracePath(startNode, targetNode);
+        }
+
+        requestManager.FinishedProcessingPath(waypoints, pathSuccess);
+
+        return true;
     }
 
     Vector3[] RetracePath(Node startNode, Node endNode)
