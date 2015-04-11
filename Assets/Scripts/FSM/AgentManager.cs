@@ -7,8 +7,8 @@ namespace FSM
 {
     public class AgentManager : MonoBehaviour
     {
-
         public List<Agent> listOfAgents;
+
         public int AddAgent(Agent agent)
         {
             listOfAgents.Add(agent);

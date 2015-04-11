@@ -6,6 +6,8 @@ using System;
 
 public class Pathfinding : MonoBehaviour
 {
+    public enum PathType { Shortest, Sense };
+
     PathRequestManager requestManager;
 
     Grid grid;

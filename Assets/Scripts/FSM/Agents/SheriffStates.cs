@@ -46,8 +46,9 @@ namespace FSM
             // throw new System.NotImplementedException();
             return false;
         }
-
     }
+
+
  
     public class PatrolArea1 : State<Sheriff>
     {
@@ -91,10 +92,25 @@ namespace FSM
             return false;
         }
 
-        public override bool OnSense(Sheriff agent, Sense sense)
+        public override bool OnSense(Sheriff sheriff, Sense sense)
         {
+            switch (sense.senseType)
+            {
+                case SenseType.Touch:
+                    return false;
+                case SenseType.Hearing:
+                    return false;
+                case SenseType.Smell:
+                    return false;
+                case SenseType.Sight:
+                    Debug.Log("<color=red> I see you, you darn outlaw </color>");
+                    sheriff.StateMachine.ChangeState(new Chase());
+                    return true;
+                default:
+                    return false;
+            }
+
             // throw new System.NotImplementedException();
-            return false;
         }
     }
 
@@ -140,12 +156,82 @@ namespace FSM
             return false;
         }
 
-        public override bool OnSense(Sheriff agent, Sense sense)
+        public override bool OnSense(Sheriff sheriff, Sense sense)
         {
+            switch (sense.senseType)
+            {
+                case SenseType.Touch:
+                    return false;
+                case SenseType.Hearing:
+                    return false;
+                case SenseType.Smell:
+                    return false;
+                case SenseType.Sight:
+                    Debug.Log("<color=red> I see you, you darn outlaw </color>");
+                    sheriff.StateMachine.ChangeState(new Chase());
+                    return true;
+                default:
+                    return false;
+            }
+
             // throw new System.NotImplementedException();
-            return false;
         }
     }
+
+    public class Chase : State<Sheriff>
+    {
+        public override void Enter(Sheriff sheriff)
+        {
+            Debug.Log(sheriff.ID + "I'm gonna catch you!" );
+
+            sheriff.TargetLocation = Location.outlaw;
+
+            var outlaw = GameObject.FindGameObjectWithTag("Outlaw");
+
+            var locManager = Object.FindObjectOfType<LocationManager>();
+
+           sheriff.ChangeLocation(outlaw.transform.position);
+        }
+
+        public override void Execute(Sheriff sheriff)
+        {
+            Debug.Log(sheriff.ID + "I'll chase you until the end of days!");
+
+            sheriff.StateMachine.ChangeState(new Chase()); // Just keep chasing
+        }
+
+        public override void Exit(Sheriff sheriff)
+        {
+            Debug.Log(sheriff.ID + " Leavin' the area");
+        }
+
+        public override bool OnMessage(Sheriff sheriff, Telegram telegram)
+        {
+            return false;
+        }
+
+        public override bool OnSense(Sheriff sheriff, Sense sense)
+        {
+            switch (sense.senseType)
+            {
+                case SenseType.Touch:
+                    return false;
+                case SenseType.Hearing:
+                    return false;
+                case SenseType.Smell:
+                    return false;
+                case SenseType.Sight:
+                    Debug.Log("<color=red> I see you, you darn outlaw </color>");
+                    sheriff.StateMachine.ChangeState(new Chase());
+                    return true;
+                default:
+                    return false;
+            }
+
+            // throw new System.NotImplementedException();
+        }
+    }
+
 
     // If the agent has a global state, then it is executed every Update() cycle
     public class SheriffGlobalState : State<Sheriff>

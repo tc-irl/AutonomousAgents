@@ -18,6 +18,7 @@ public class Node : IHeapItem<Node>
     public int movementPenalty;
 
     int heapIndex;
+    float nodeAttenutation;
     
     public Node parent;
 
@@ -28,6 +29,15 @@ public class Node : IHeapItem<Node>
         this.gridX = gridX;
         this.gridY = gridY;
         movementPenalty = penalty;
+
+        if(this.walkable)
+        {
+            nodeAttenutation = 0.1f;
+        }
+        else
+        {
+            nodeAttenutation = 1.0f;
+        }
     }
 
     public int fCost
